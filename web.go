@@ -18,7 +18,9 @@ func main() {
 }
 
 func hello(res http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(res, "Hello, %s world from %s", runtime.Version(), stringValue(os.Hostname, "localhost"))
+        gearName := os.Getenv("OPENSHIFT_GEAR_NAME")
+        hostName := stringValue(os.Hostname, "localhost")
+	fmt.Fprintf(res, "Hello, Go %s world from %s (on %s)", runtime.Version(), gearName, hostName)
 }
 
 func stringValue(f func() (string, error), defaultValue string) string {
