@@ -18,5 +18,13 @@ func main() {
 }
 
 func hello(res http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(res, "hello, world from %s", runtime.Version())
+	fmt.Fprintf(res, "Hello, %s world from %s", runtime.Version(), stringValue(os.Hostname, "localhost"))
+}
+
+func stringValue(f func() (string, error), defaultValue string) string {
+    s, err := f()
+    if s == "" && err != nil {
+        s = defaultValue
+    }
+    return s
 }
